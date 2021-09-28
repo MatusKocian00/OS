@@ -9,7 +9,6 @@ int main(int argc, char* argv[])
 
     pipe(to_child);
     pipe(to_parent);
-
     int pid = fork();
 
     if (pid == 0){
