@@ -656,3 +656,17 @@ procdump(void)
     printf("\n");
   }
 }
+
+// collecting number of processes
+// point to struct sysinfo
+
+int
+getNproc(void){
+  struct proc *p;
+  int nproc = 0;
+  for (p = proc; p<&proc[NPROC];p++){
+      if(p->state!=UNUSED)
+        nproc++;
+  }
+  return nproc;
+}
