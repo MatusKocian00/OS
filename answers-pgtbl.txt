@@ -1,0 +1,38 @@
+fork - pri zavolani fork() sa skpiruje cela pamat rodica co je zbytocne,
+       kedze sa vsetko zahodi, da sa to zrychlit pouzitim "copy-on-write fork"-om
+       a to tak, ze sa pouziju aj v potomkovi rovnake stranky ako v rodicovskom
+       procese a az pri pokuse o zapis, aby sa neprepisali data aj v rodicovi(alebo naopak),
+       sa to odcleni
+
+2. Vysvetlite výstup funkcie vmprint() a jeho súvis s obrázkom 3-4 z xv6 knižky. 
+Vypise tabulky 3 urovni, L2, L1, L0. Jednu tabulku urovne L2 s indexami 0 az 254. 
+Na indexe 0 ma tabulku urovne L1 s indexom 0 v ktorej ma vyuzitu tabulku urovne L0 s indexami 0 az 2.
+
+ 
+page table 0x0000000087f6e000
+
+Root page table physical address: 0x0000000087f6e000
+
+..0: pte 0x0000000021fda801 pa 0x0000000087f6a000
+
+Root page directory entry 0, PTE content is 0x0000000021fda801, indicating that the physical page number of the next level (second level) page table is: 0x87f6a, Flags is: 0x001, PTE_V is valid. The starting physical address of the physical page is 0x0000000087f6a000
+
+.. ..0: pte 0x0000000021fda401 pa 0x0000000087f69000
+
+The third-level page directory page table location. The physical page number of pte: 0x87f69, Flags is 0x001.
+
+.. .. ..0: pte 0x0000000021fdac1f pa 0x0000000087f6b000
+
+3. Čo obsahuje stránka 0? 
+Tabulky stranok prveho procesu init pred jeho spustenim.
+4. Čo je v stránke 2?
+Druha cast tabulky trampoline, trapframe a namapovany usyscall.
+5. Keď proces beží v užívateľskom móde, môže prečítať/zapísať pamäť mapovanú stránkou 1?
+Nie.
+6. Čo obsahuje tretia stránka od konca?
+Zasobnik
+
+
+
+
+
