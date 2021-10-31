@@ -66,15 +66,28 @@ usertrap(void)
 
     syscall();
   } else if((which_dev = devintr()) != 0){
-    // ok
-  } else {
+    // ok 
+  } else if(r_scause() == 15 || r_scause() == 13){ 
+    uint64 va = r_stval();
+    if (va >= MAXVA){
+      p->killed = 1;
+      goto done;
+    }
+    if (va <= PGROUNDDOWN(p->trapframe->sp) && va >= PGROUNDDOWN(p->trapframe->sp) - PGSIZE){
+      p->killed = 1;
+      goto done;
+    }
+    if(uvmcow(p->pagetable, r_stval()) < 0)
+      p->killed = 1;
+    }
+    else {
     printf("usertrap(): unexpected scause %p pid=%d\n", r_scause(), p->pid);
     printf("            sepc=%p stval=%p\n", r_sepc(), r_stval());
     p->killed = 1;
   }
-
-  if(p->killed)
-    exit(-1);
+  done:
+    if(p->killed)
+      exit(-1);
 
   // give up the CPU if this is a timer interrupt.
   if(which_dev == 2)
