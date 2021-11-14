@@ -1,0 +1,3 @@
+Prečo v tabuľke chýbali kľúče, keď sme použili dve vlákna, ale všetko bolo v poriadku pri jednom vlákne? 
+
+Obaja idú zapísať tam isto, prvý síce zapíše ale druhý tam zapíše niečo iné, takže to pôvodné prestane existovať
